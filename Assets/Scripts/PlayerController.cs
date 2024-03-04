@@ -25,9 +25,6 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
             isRolling = true;
-
-        if(Input.GetKeyDown(KeyCode.Escape))
-            Application.Quit();
     }
 
     public void FixedUpdate()
