@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     public UIManager _uiManager;
     public LevelManager _levelManager;
+
 
     private void Start()
     {
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
                 GameOver(); break;
         }
 
-        if(Input.GetKey(KeyCode.Escape) && gameState == GameState.MainMenu && gameState == GameState.GameWin && gameState == GameState.GameOver)
+        if(Input.GetKeyDown(KeyCode.Escape) && gameState != GameState.MainMenu && gameState != GameState.GameWin && gameState != GameState.GameOver)
         {
             if (gameState == GameState.Gameplay)
                 gameState = GameState.Pause;

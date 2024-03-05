@@ -4,17 +4,19 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public UIManager _uiManager;
+    public GameManager _gameManager;
+
 
     public void LoadScene(string sceneName)
     {
-
-        if(sceneName == "MainMenu")
+        switch (sceneName)
         {
-            _uiManager.UI_MainMenu();
-        }
-        if(sceneName == "Gameplay_field")
-        {
-            _uiManager.UI_GamePlay();
+            case "MainMenu":
+                _gameManager.gameState = GameManager.GameState.MainMenu;
+                break;
+            case "Gameplay_field":
+                _gameManager.gameState = GameManager.GameState.Gameplay;
+                break;
         }
         SceneManager.LoadScene(sceneName);
     }
