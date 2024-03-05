@@ -17,14 +17,17 @@ public class LevelManager : MonoBehaviour
         switch (sceneName)
         {
             case "MainMenu":
-                _gameManager.gameState = GameManager.GameState.MainMenu;
-                break;
+                _gameManager.gameState = GameManager.GameState.MainMenu; break;
             case "Gameplay_field":
-                _gameManager.gameState = GameManager.GameState.Gameplay;
-                break;
+                _gameManager.gameState = GameManager.GameState.Gameplay; break;
             case "Gameplay_Scene2":
-                _gameManager.gameState = GameManager.GameState.Gameplay;
-                break;
+                _gameManager.gameState = GameManager.GameState.Gameplay; break;
+            case "Options":
+                _gameManager.gameState = GameManager.GameState.Gameplay; break;
+            case "GameWin":
+                _gameManager.gameState = GameManager.GameState.GameWin; break;
+            case "GameOver":
+                _gameManager.gameState = GameManager.GameState.GameOver; break;
         }
     }
 

@@ -46,14 +46,6 @@ public class GameManager : MonoBehaviour
             case GameState.GameOver:
                 GameOver(); break;
         }
-
-        if(Input.GetKeyDown(KeyCode.Escape) && gameState != GameState.MainMenu && gameState != GameState.GameWin && gameState != GameState.GameOver)
-        {
-            if (gameState == GameState.Gameplay)
-                gameState = GameState.Pause;
-            else
-                gameState = GameState.Gameplay;
-        }
     }
 
     private void MainMenu()
@@ -66,26 +58,36 @@ public class GameManager : MonoBehaviour
     private void GamePlay()
     {
         _uiManager.UI_GamePlay();
+        if(Input.GetKeyDown(KeyCode.Escape))
+            gameState = GameState.Pause;
         
     }
 
     private void Pause()
     {
         _uiManager.UI_PauseUI();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            gameState = GameState.Gameplay;
     }
 
     private void GameWin()
     {
+        playerArt.SetActive(false);
+        playerController.enabled = false;
         _uiManager.UI_GameWin();
     }
 
     private void GameOver()
     {
+        playerArt.SetActive(false);
+        playerController.enabled = false;
         _uiManager.UI_GameOver();
     }
 
     private void Options()
     {
+        playerArt.SetActive(false);
+        playerController.enabled = false;
         _uiManager.UI_Options();
     }
 
