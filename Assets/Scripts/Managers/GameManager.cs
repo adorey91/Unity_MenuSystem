@@ -14,13 +14,17 @@ public class GameManager : MonoBehaviour
     }
 
     public GameState gameState;
-
     public UIManager _uiManager;
-    public LevelManager _levelManager;
 
+    public GameObject spawnPoint;
+    public GameObject player;
+    public GameObject playerArt;
+    private PlayerController playerController;
 
     private void Start()
     {
+        
+        playerController = player.GetComponent<PlayerController>();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -54,12 +58,15 @@ public class GameManager : MonoBehaviour
 
     private void MainMenu()
     {
+        playerArt.SetActive(false);
+        playerController.enabled = false;
         _uiManager.UI_MainMenu();
     }
 
     private void GamePlay()
     {
         _uiManager.UI_GamePlay();
+        
     }
 
     private void Pause()
@@ -80,5 +87,13 @@ public class GameManager : MonoBehaviour
     private void Options()
     {
         _uiManager.UI_Options();
+    }
+
+    public void MovePlayerToSpawnPosition()
+    {
+        spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint");
+        player.transform.position = spawnPoint.transform.position;
+        playerArt.SetActive(true);
+        playerController.enabled = true;
     }
 }
