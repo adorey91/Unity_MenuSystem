@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public enum GameState
-    {
+    { 
         MainMenu,
-        Gameplay,
+        GamePlay,
         Pause,
         Options,
         GameOver,
@@ -14,88 +16,86 @@ public class GameManager : MonoBehaviour
     }
 
     public GameState gameState;
-    public UIManager _uiManager;
 
+    public UIManager _uiManager;
+    public LevelManager _levelManager;
+    public TMP_Text currentState; // used to show state on GUI
+    public TMP_Text sceneText;
     public GameObject spawnPoint;
     public GameObject player;
-    public GameObject playerArt;
-    private PlayerController playerController;
+    
+    private Vector2 playerLastPos; // last player position? (not sure if i need this yet)
+    public string beforeOptions;
 
     private void Start()
     {
-        
-        playerController = player.GetComponent<PlayerController>();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        gameState = GameState.MainMenu;
+        currentState.text = $"State: {gameState.ToString()}";
+        sceneText.text = $"Scene: {SceneManager.GetActiveScene().name}";
+        beforeOptions = SceneManager.GetActiveScene().name;
     }
 
     private void Update()
     {
+        sceneText.text = $"Scene: {SceneManager.GetActiveScene().name}";
+        if (currentState.text != gameState.ToString())
+            currentState.text = $"State: {gameState.ToString()}";
+        if(SceneManager.GetActiveScene().name != "Options")
+        {
+            if(SceneManager.GetActiveScene().name != beforeOptions)
+                beforeOptions = SceneManager.GetActiveScene().name;
+        }
+
         switch (gameState)
         {
-            case GameState.MainMenu:
-                MainMenu(); break;
-            case GameState.Gameplay:
-                GamePlay(); break;
-            case GameState.Pause:
-                Pause(); break;
-            case GameState.Options:
-                Options(); break;
-            case GameState.GameWin:
-                GameWin(); break;
-            case GameState.GameOver:
-                GameOver(); break;
+            case GameState.MainMenu: MainMenu(); break;
+            case GameState.GamePlay: GamePlay(); break;
+            case GameState.Pause: Pause(); break;
+            case GameState.Options: Options(); break;
+            case GameState.GameWin: GameWin(); break;
+            case GameState.GameOver: GameOver(); break;
         }
     }
 
-    private void MainMenu()
+    void MainMenu()
     {
-        playerArt.SetActive(false);
-        playerController.enabled = false;
         _uiManager.UI_MainMenu();
     }
 
-    private void GamePlay()
+    void GamePlay()
     {
         _uiManager.UI_GamePlay();
-        if(Input.GetKeyDown(KeyCode.Escape))
-            gameState = GameState.Pause;
-        
-    }
-
-    private void Pause()
-    {
-        _uiManager.UI_PauseUI();
         if (Input.GetKeyDown(KeyCode.Escape))
-            gameState = GameState.Gameplay;
+            gameState = GameState.Pause;
     }
 
-    private void GameWin()
+    void Pause()
     {
-        playerArt.SetActive(false);
-        playerController.enabled = false;
+        _uiManager.UI_Pause();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            gameState = GameState.GamePlay;
+    }
+
+    void GameWin()
+    {
         _uiManager.UI_GameWin();
     }
 
-    private void GameOver()
+    void GameOver()
     {
-        playerArt.SetActive(false);
-        playerController.enabled = false;
         _uiManager.UI_GameOver();
     }
 
-    private void Options()
+    void Options()
     {
-        playerArt.SetActive(false);
-        playerController.enabled = false;
         _uiManager.UI_Options();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            _levelManager.LoadScene(beforeOptions); // need to figure this out?\
     }
 
-    public void MovePlayerToSpawnPosition()
+    public void MovePlayerToSpawnLocation()
     {
         spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint");
         player.transform.position = spawnPoint.transform.position;
-        playerArt.SetActive(true);
-        playerController.enabled = true;
     }
 }
