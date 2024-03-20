@@ -5528,7 +5528,7 @@ GameObject:
   - component: {fileID: 792483071}
   - component: {fileID: 792483070}
   m_Layer: 0
-  m_Name: GameWin
+  m_Name: Trigger- GameWin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5673,7 +5673,7 @@ GameObject:
   - component: {fileID: 825831723}
   - component: {fileID: 825831722}
   m_Layer: 0
-  m_Name: GameOver
+  m_Name: Trigger- GameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

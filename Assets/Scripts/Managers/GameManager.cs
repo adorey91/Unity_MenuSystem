@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public enum GameState
-    { 
+    {
         MainMenu,
         GamePlay,
         Pause,
@@ -17,33 +17,30 @@ public class GameManager : MonoBehaviour
 
     public GameState gameState;
 
+    [Header("Other Managers")]
     public UIManager _uiManager;
     public LevelManager _levelManager;
-    public TMP_Text currentState; // used to show state on GUI
-    public TMP_Text sceneText;
+    string stateBeforeOptions;
+
+    [Header("Text UI")]
+    [SerializeField] TMP_Text currentState;
+    [SerializeField] TMP_Text currentScene;
+
     public GameObject spawnPoint;
     public GameObject player;
-    
-    private Vector2 playerLastPos; // last player position? (not sure if i need this yet)
-    public string beforeOptions;
 
-    private void Start()
+
+    public void Start()
     {
         gameState = GameState.MainMenu;
-        currentState.text = $"State: {gameState.ToString()}";
-        sceneText.text = $"Scene: {SceneManager.GetActiveScene().name}";
-        beforeOptions = SceneManager.GetActiveScene().name;
     }
 
-    private void Update()
+    public void Update()
     {
-        sceneText.text = $"Scene: {SceneManager.GetActiveScene().name}";
-        if (currentState.text != gameState.ToString())
-            currentState.text = $"State: {gameState.ToString()}";
-        if(SceneManager.GetActiveScene().name != "Options")
+        if (_levelManager.SceneName() != "Options")
         {
-            if(SceneManager.GetActiveScene().name != beforeOptions)
-                beforeOptions = SceneManager.GetActiveScene().name;
+            if (_levelManager.SceneName() != stateBeforeOptions)
+                stateBeforeOptions = _levelManager.SceneName();
         }
 
         switch (gameState)
@@ -90,7 +87,7 @@ public class GameManager : MonoBehaviour
     {
         _uiManager.UI_Options();
         if (Input.GetKeyDown(KeyCode.Escape))
-            _levelManager.LoadScene(beforeOptions); // need to figure this out?\
+            _levelManager.LoadScene(stateBeforeOptions);
     }
 
     public void MovePlayerToSpawnLocation()
