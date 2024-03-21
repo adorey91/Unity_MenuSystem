@@ -5546,7 +5546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b50838011f91743a6a6568ddac6fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: GameWin
+  levelName: GameEnd_GameWin
 --- !u!61 &792483071
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5691,7 +5691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b50838011f91743a6a6568ddac6fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: GameOver
+  levelName: GameEnd_GameOver
 --- !u!61 &825831723
 BoxCollider2D:
   m_ObjectHideFlags: 0

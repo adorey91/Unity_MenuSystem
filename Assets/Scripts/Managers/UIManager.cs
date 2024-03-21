@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     public GameObject playerSprite;
     private PlayerController playerController;
 
-    private void Start()
+    private void Awake()
     {
         playerController = player.GetComponent<PlayerController>();
     }

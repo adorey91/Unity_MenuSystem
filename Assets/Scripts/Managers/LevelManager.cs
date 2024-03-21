@@ -14,8 +14,23 @@ public class LevelManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        if(SceneName() != "Options")
-            SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        if (sceneName.StartsWith("MainMenu"))
+            _gameManager.LoadState(sceneName);
+        else if (sceneName.StartsWith("Gameplay"))
+            _gameManager.LoadState("Gameplay");
+
+        // Can load one of two panels with the game end scene.
+        else if (sceneName.StartsWith("GameEnd"))
+        {
+            if (sceneName.EndsWith("GameOver"))
+                _gameManager.LoadState("GameOver");
+            else if (sceneName.EndsWith("GameWin"))
+                _gameManager.LoadState("GameWin");
+
+            sceneName = "GameEnd";
+        }
         SceneManager.LoadScene(sceneName);
     }
 
@@ -24,5 +39,4 @@ public class LevelManager : MonoBehaviour
         _gameManager.MovePlayerToSpawnLocation();
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-
 }
